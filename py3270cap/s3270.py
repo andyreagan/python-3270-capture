@@ -183,8 +183,9 @@ class S3270:
 
         In Ebcdic mode every buffer position is a clean space-separated token:
         a 2-hex EBCDIC byte, or SF(...) / SA(...) / GE(...). Field attribute
-        bits (basic attr `c0`): 0x20 protected, 0x10 numeric, 0x0C intensity
-        (0x08 nondisplay, 0x0C intensified), 0x01 modified.
+        bits (basic attr `c0`): 0x20 protected, 0x10 numeric, 0x01 modified, and
+        the two display bits 0x0C: 0x00/0x04 normal, 0x08 intensified, 0x0C
+        non-display (hidden — e.g. password fields).
         """
         try:
             r = self.exec("ReadBuffer(Ebcdic)")
@@ -202,8 +203,8 @@ class S3270:
                             "col": col,
                             "protected": bool(attr & 0x20),
                             "numeric": bool(attr & 0x10),
-                            "nondisplay": (attr & 0x0C) == 0x08,
-                            "intensified": (attr & 0x0C) == 0x0C,
+                            "nondisplay": (attr & 0x0C) == 0x0C,
+                            "intensified": (attr & 0x0C) == 0x08,
                             "modified": bool(attr & 0x01),
                         }
                     )
