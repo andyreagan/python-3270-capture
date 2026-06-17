@@ -1,0 +1,23 @@
+[project]
+name = "py3270cap"
+version = "0.1.0"
+description = "A capturing TN3270 terminal emulator — a .har for the mainframe. Wraps s3270 and records every keystroke and screen."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+py3270 = "py3270cap.cli:main"
+py3270-convert = "py3270cap.convert:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["py3270cap"]
+
+# Declare this project as its own workspace root so `uv run` does not scan parent
+# directories for a workspace (the parent scratch/ pyproject is unrelated).
+[tool.uv.workspace]
+members = []
