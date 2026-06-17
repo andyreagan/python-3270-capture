@@ -23,7 +23,9 @@ def _session(tmp_path):
         rec.keystroke("Char", ch, 21, 19)
     after = list(blank)
     after[0] = "DATA SET LIST".ljust(80)
-    rec.begin_transaction("Enter", {"row": 21, "col": 22}, screen_obj(logon, {"row": 21, "col": 22}))
+    rec.begin_transaction(
+        "Enter", {"row": 21, "col": 22}, screen_obj(logon, {"row": 21, "col": 22})
+    )
     rec.complete_transaction(screen_obj(after, {"row": 3, "col": 0}), [], "unlocked")
     rec.finalize()
     return rec

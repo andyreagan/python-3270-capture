@@ -34,9 +34,7 @@ def test_full_transaction_roundtrip(tmp_path):
     har = json.loads((tmp_path / "s.har").read_text())
     entries = har["log"]["entries"]
     assert [e["request"]["aid"] for e in entries] == ["Connect", "Enter"]
-    typed = "".join(
-        k["value"] for k in entries[1]["request"]["keystrokes"] if k["key"] == "Char"
-    )
+    typed = "".join(k["value"] for k in entries[1]["request"]["keystrokes"] if k["key"] == "Char")
     assert typed == "a•"
     assert har["log"]["session"]["host"] == "h"
 

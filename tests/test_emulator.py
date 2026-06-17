@@ -24,7 +24,7 @@ def test_hidden_at_no_fields():
 def test_hidden_at_governing_field():
     fields = [
         {"row": 5, "col": 28, "nondisplay": False},  # userid field (visible)
-        {"row": 6, "col": 28, "nondisplay": True},   # password field (hidden)
+        {"row": 6, "col": 28, "nondisplay": True},  # password field (hidden)
     ]
     e = _emu(fields)
     # cells after the userid attribute, before the password attribute -> visible
