@@ -34,6 +34,18 @@ bar, just like a real terminal). If your window is too small it shows a resize p
 instead of silently clipping the bottom of the screen. macOS Terminal's default is 24
 rows, so make the window one row taller.
 
+## Ways to run it
+
+`uv run` syncs the environment for you — there is no separate `uv sync` step. Pick whichever fits:
+
+| Command | When | Notes |
+|---|---|---|
+| `uv run py3270 mainframe` | from the project dir | one step; auto-syncs each time (cached, instant) |
+| `uvx --from /path/to/3270-capture py3270 mainframe` | from anywhere | no project venv to manage |
+| `uv tool install /path/to/3270-capture` → then `py3270 mainframe` | install once | puts `py3270` + `py3270-convert` on your PATH globally — closest to a plain command; re-install or `uv tool upgrade py3270cap` to pick up changes |
+
+All three expose both entry points (`py3270` and `py3270-convert`).
+
 ## Usage
 
 ```
