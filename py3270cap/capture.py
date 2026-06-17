@@ -82,9 +82,7 @@ class Recorder:
             }
         )
 
-    def complete_transaction(
-        self, screen_after: dict, fields: list[dict], keyboard: str
-    ) -> None:
+    def complete_transaction(self, screen_after: dict, fields: list[dict], keyboard: str) -> None:
         if self._cur is None:
             return
         e = self._cur

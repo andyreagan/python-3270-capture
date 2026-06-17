@@ -47,7 +47,7 @@ class Status:
     cursor_col: int = 0
 
     @classmethod
-    def parse(cls, line: str) -> "Status":
+    def parse(cls, line: str) -> Status:
         f = line.split()
         if len(f) < 12:
             # Not a well-formed status line; return defaults but keep raw.
@@ -111,8 +111,7 @@ class S3270:
             )
         except FileNotFoundError as e:
             raise S3270Error(
-                "s3270 not found on PATH. Install the x3270 suite "
-                "(macOS: `brew install x3270`)."
+                "s3270 not found on PATH. Install the x3270 suite " "(macOS: `brew install x3270`)."
             ) from e
 
         self._q: queue.Queue[str | None] = queue.Queue()

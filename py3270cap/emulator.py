@@ -74,9 +74,11 @@ class Emulator:
         """Re-read the screen + status from s3270. Returns True if anything changed."""
         rows, st = self.s.ascii_screen()
         rows = [r[: self.cols].ljust(self.cols) for r in rows]
-        changed = rows != self.cur_rows or (
-            st.cursor_row != self.cursor["row"] or st.cursor_col != self.cursor["col"]
-        ) or st.keyboard != self.status.keyboard
+        changed = (
+            rows != self.cur_rows
+            or (st.cursor_row != self.cursor["row"] or st.cursor_col != self.cursor["col"])
+            or st.keyboard != self.status.keyboard
+        )
         self.cur_rows = rows
         self.cursor = {"row": st.cursor_row, "col": st.cursor_col}
         self.status = st
@@ -348,8 +350,13 @@ class Emulator:
         self.message = "^] menu  |  F1-F12 = PF1-12  |  Enter/Tab/arrows as usual"
         last_poll = time.monotonic()
         my, mx = self.scr.getmaxyx()
-        self.rec.note(event="viewport", term_rows=my, term_cols=mx,
-                      screen_rows=self.rows, screen_cols=self.cols)
+        self.rec.note(
+            event="viewport",
+            term_rows=my,
+            term_cols=mx,
+            screen_rows=self.rows,
+            screen_cols=self.cols,
+        )
         last_viewport = (my, mx)
 
         while not self.quit:
@@ -370,8 +377,13 @@ class Emulator:
 
             max_y, max_x = self.scr.getmaxyx()
             if (max_y, max_x) != last_viewport:
-                self.rec.note(event="viewport", term_rows=max_y, term_cols=max_x,
-                              screen_rows=self.rows, screen_cols=self.cols)
+                self.rec.note(
+                    event="viewport",
+                    term_rows=max_y,
+                    term_cols=max_x,
+                    screen_rows=self.rows,
+                    screen_cols=self.cols,
+                )
                 last_viewport = (max_y, max_x)
             # Render every tick from cache. curses.refresh() diffs against the
             # physical screen, so unchanged frames cost nothing.

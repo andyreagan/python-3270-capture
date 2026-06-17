@@ -49,10 +49,18 @@ def main(argv: list[str] | None = None) -> int:
         description="Capturing TN3270 emulator — a .har for the mainframe.",
     )
     p.add_argument("host", help="host (e.g. mainframe, host:port, or an s3270 'L:host:992' string)")
-    p.add_argument("--port", type=int, default=None, help="TCP port (default 23, or 992 with --tls)")
+    p.add_argument(
+        "--port", type=int, default=None, help="TCP port (default 23, or 992 with --tls)"
+    )
     p.add_argument("--tls", action="store_true", help="connect with TLS (s3270 L: prefix)")
-    p.add_argument("--model", default="3279-2-E", help="terminal model (default 3279-2-E = 24x80 color)")
-    p.add_argument("--capture-dir", default="captures", help="where to write the transcript (default ./captures)")
+    p.add_argument(
+        "--model", default="3279-2-E", help="terminal model (default 3279-2-E = 24x80 color)"
+    )
+    p.add_argument(
+        "--capture-dir",
+        default="captures",
+        help="where to write the transcript (default ./captures)",
+    )
     p.add_argument("--name", default=None, help="session name used in filenames (default: host)")
     p.add_argument(
         "--trace",
@@ -116,12 +124,12 @@ def main(argv: list[str] | None = None) -> int:
         recorder.finalize()
         s.close()
 
-    print(f"\nSession captured:")
+    print("\nSession captured:")
     print(f"  HAR        {har_path}  ({len(recorder.entries)} transactions)")
     print(f"  JSONL log  {jsonl_path}")
     if trace_path and os.path.exists(trace_path):
         print(f"  raw trace  {trace_path}")
-    print(f"\nConvert it:")
+    print("\nConvert it:")
     print(f"  uv run py3270-convert {har_path} --events {base}.events.jsonl")
     print(f"  uv run py3270-convert {har_path} --text   {base}.txt")
     return 0

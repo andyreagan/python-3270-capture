@@ -1,23 +1,76 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "py3270cap"
 version = "0.1.0"
 description = "A capturing TN3270 terminal emulator — a .har for the mainframe. Wraps s3270 and records every keystroke and screen."
 readme = "README.md"
-requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Andy Reagan", email = "andy@andyreagan.com" }]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Terminals :: Terminal Emulators/X Terminals",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+keywords = ["3270", "tn3270", "mainframe", "s3270", "x3270", "terminal", "emulator", "capture", "migration"]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/andyreagan/python-3270-capture"
+Repository = "https://github.com/andyreagan/python-3270-capture"
+Issues = "https://github.com/andyreagan/python-3270-capture/issues"
 
 [project.scripts]
 py3270 = "py3270cap.cli:main"
 py3270-convert = "py3270cap.convert:main"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["py3270cap"]
 
+[tool.hatch.build.targets.sdist]
+include = ["py3270cap/", "tests/", "README.md", "LICENSE"]
+
 # Declare this project as its own workspace root so `uv run` does not scan parent
-# directories for a workspace (the parent scratch/ pyproject is unrelated).
+# directories for a workspace.
 [tool.uv.workspace]
 members = []
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py", "*_test.py"]
+addopts = ["-ra", "--strict-markers", "--tb=short"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.coverage.run]
+branch = true
+source = ["py3270cap"]
+
+[tool.coverage.report]
+show_missing = true
+precision = 2
