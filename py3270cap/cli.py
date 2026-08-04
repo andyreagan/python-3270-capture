@@ -88,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
     label = args.name or _host_label(args.host)
 
     os.makedirs(args.capture_dir, exist_ok=True)
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    stamp = datetime.now().astimezone().strftime("%Y%m%d-%H%M%S")
     base = os.path.join(args.capture_dir, f"{label}-{stamp}")
     jsonl_path = base + ".jsonl"
     har_path = base + ".har"

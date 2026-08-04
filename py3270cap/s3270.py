@@ -194,7 +194,7 @@ class S3270:
         for row, line in enumerate(r.data):
             col = 0
             for tok in line.split():
-                if tok.startswith("SF(") or tok.startswith("SFE("):
+                if tok.startswith(("SF(", "SFE(")):
                     attr = _basic_attr(tok)
                     fields.append(
                         {
@@ -208,7 +208,7 @@ class S3270:
                         }
                     )
                     col += 1
-                elif tok.startswith("SA(") or tok.startswith("MF("):
+                elif tok.startswith(("SA(", "MF(")):
                     continue  # no buffer position consumed
                 else:
                     col += 1  # ordinary char or GE(xx)

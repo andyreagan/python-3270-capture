@@ -33,7 +33,9 @@ class Recorder:
         self.entries: list[dict] = []
         self._pending_keystrokes: list[dict] = []
         self._cur: dict | None = None
-        self._jsonl = open(jsonl_path, "a", buffering=1, encoding="utf-8")
+        self._jsonl = open(  # noqa: SIM115 -- long-lived handle, closed in finalize()
+            jsonl_path, "a", buffering=1, encoding="utf-8"
+        )
         self._emit({"type": "session", **self.session})
 
     def _emit(self, rec: dict) -> None:
