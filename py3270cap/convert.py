@@ -74,21 +74,21 @@ def _write_events(har: dict, path: str) -> None:
         out.write(json.dumps({"event": "session", **log.get("session", {})}) + "\n")
         for e in log.get("entries", []):
             req = e.get("request", {})
-            for ks in req.get("keystrokes", []):
-                out.write(
-                    json.dumps(
-                        {
-                            "event": "keystroke",
-                            "index": e.get("index"),
-                            "t": ks.get("t"),
-                            "key": ks.get("key"),
-                            "value": ks.get("value"),
-                            "row": ks.get("row"),
-                            "col": ks.get("col"),
-                        }
-                    )
-                    + "\n"
+            out.writelines(
+                json.dumps(
+                    {
+                        "event": "keystroke",
+                        "index": e.get("index"),
+                        "t": ks.get("t"),
+                        "key": ks.get("key"),
+                        "value": ks.get("value"),
+                        "row": ks.get("row"),
+                        "col": ks.get("col"),
+                    }
                 )
+                + "\n"
+                for ks in req.get("keystrokes", [])
+            )
             out.write(
                 json.dumps(
                     {
@@ -138,8 +138,7 @@ def _write_text(har: dict, path: str) -> None:
                 out.write("    typed: " + "".join(k.get("value") or "" for k in typed) + "\n")
             out.write("-" * 80 + "\n")
             screen = (resp or {}).get("screen") or {}
-            for row in screen.get("rows", []):
-                out.write(row.rstrip() + "\n")
+            out.writelines(row.rstrip() + "\n" for row in screen.get("rows", []))
             out.write("\n")
 
 
