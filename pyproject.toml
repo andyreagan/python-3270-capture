@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "py3270cap"
-version = "0.1.0"
+version = "0.1.1"
 description = "A capturing TN3270 terminal emulator — a .har for the mainframe. Wraps s3270 and records every keystroke and screen."
 readme = "README.md"
 license = { text = "MIT" }
@@ -66,6 +66,11 @@ testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 100
+
+[tool.ruff.lint]
+# Pin to the pre-ruff-0.16 default rule set. Ruff 0.16 expanded its defaults
+# from ~60 to ~400 rules; opting into the wider set is a separate decision.
+select = ["E4", "E7", "E9", "F"]
 
 [tool.coverage.run]
 branch = true
